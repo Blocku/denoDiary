@@ -2,10 +2,11 @@ import { useState, useEffect } from 'preact/hooks'
 
 export default function Menu() {
  
-    const [openMenu, setOpenMenu] = useState<boolean>()
+    const [openMenu, setOpenMenu] = useState<boolean>(false)
     const [openMenuSubject, setOpenMenuSubject] = useState<boolean>(false)
     const [newTodo, setNewTodo] = useState<Object>({subject: '', paragraph: '', page: '', number: ''})
     const [todos, setTodos] = useState<Array>([])
+    const [redact, setRedact] = useState<boolean>(false)
 
     const subjects: Array<string> = ['Русский язык', 'Физика', 'Английский язык', 'История', 'Химия', 'Биология', 'Алгебра', 'География', 'Информатика', 'Геометрия', 'Обществознание']
 
@@ -45,15 +46,15 @@ export default function Menu() {
         localStorage.setItem('todos', JSON.stringify(newTodos))
       }
 
-    // function changeTodo(todo: Object) {
-    //     setNewTodo(todo)
-    //     setOpenMenu(true)
-    // }
+    function changeTodo(todo: Object) {
+        setNewTodo(todo)
+        setOpenMenu(true)
+    }
 
 
     return(
         <>
-            <main className='p-3 space-y-16 bg-white h-dvh md:h-auto max-w-screen-md md:rounded-lg mx-auto md:mt-[20dvh]' >
+            <main className='p-3 space-y-16 bg-white overflow-auto h-dvh max-w-screen-md md:max-h-[50rem] md:rounded-lg mx-auto md:mt-[20dvh]' >
                 <button onClick={() => setOpenMenu(true)} className='flex items-center rounded-md bg-indigo-500 w-full p-3' >
                     <span className='flex-grow text-lg text-white font-medium' >Добавить новое задание</span>
                     <svg className="h-6 w-6 stroke-2 stroke-white">
@@ -61,7 +62,7 @@ export default function Menu() {
                     </svg>
                 </button>
 
-                <ul className='space-y-3 max-h-dvh overflow-auto p-1 pb-10' >
+                <ul className='space-y-3' >
                     {todos && todos.map((todo: Object) => 
                     <li key={todo.id} className='w-full ring-2 ring-zinc-300 rounded-md p-1 select-none' >
                         <span className='text-lg font-medium' >{todo.subject}</span>
@@ -69,8 +70,8 @@ export default function Menu() {
                         <div className='flex justify-between items-center mt-1' >
                             <span className='text-sm text-zinc-500' >{todo.date}</span>
 
-                            <span className='flex' >
-                                <svg className="h-6 w-6 stroke-2 stroke-zinc-400 fill-none cursor-pointer">
+                            <span className='flex gap-x-1' >
+                                <svg onClick={() => setRedact(true)} className="h-6 w-6 stroke-2 stroke-zinc-400 fill-none cursor-pointer">
                                     <path d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
                                 </svg>
                                 <svg onClick={() => deleteTodo(todo.id)} className="h-6 w-6 fill-none stroke-2 stroke-red-500 cursor-pointer">
@@ -118,7 +119,10 @@ export default function Menu() {
                             <span className='font-medium' >Номер</span>
                             <input value={newTodo.number} onChange={(e) => setNewTodo({...newTodo, number: e.target.value})} className='ring-2 ring-zinc-200 focus:ring-2 focus:ring-indigo-400 focus:outline-none p-1 rounded' placeholder='необязательное поле' type="text" />
                         </label>
-                        <button type='submit' className='bg-indigo-500 w-full rounded text-white text-lg font-medium p-1' >Отправить</button>
+                        {redact ?
+                        <button onClick={changeTodo} className='bg-indigo-500 w-full rounded text-white text-lg font-medium p-1' >Сохранить</button>
+                        :
+                        <button type='submit' className='bg-indigo-500 w-full rounded text-white text-lg font-medium p-1' >Отправить</button>}
                     </form>
                 </section>
             }
