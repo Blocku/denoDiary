@@ -8,7 +8,7 @@ export default function App({ Component }: PageProps) {
         <title>diary</title>
         <link rel="stylesheet" href="/styles.css" />
       </head>
-      <body className='bg-zinc-200' >
+      <body className='bg-zinc-200 overflow-hidden' >
         <Component />
       </body>
     </html>

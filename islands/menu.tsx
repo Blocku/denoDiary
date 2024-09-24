@@ -16,7 +16,7 @@ export default function Menu() {
         }
       }, [])
  
-    function createTodo(e) {
+    function createTodo(e: Event) {
         e.preventDefault()
         if(newTodo.subject && newTodo.paragraph !== ''){
             const todo = {
@@ -36,7 +36,7 @@ export default function Menu() {
     }
 
     function deleteTodo(id: Date){
-        const newTodos = todos.filter(todo => {
+        const newTodos = todos.filter((todo: Object) => {
           if(todo.id !== id){
             return todo
           }
@@ -61,8 +61,8 @@ export default function Menu() {
                     </svg>
                 </button>
 
-                <ul className='space-y-3' >
-                    {todos && todos.map(todo => 
+                <ul className='space-y-3 max-h-dvh overflow-auto p-1 pb-10' >
+                    {todos && todos.map((todo: Object) => 
                     <li key={todo.id} className='w-full ring-2 ring-zinc-300 rounded-md p-1 select-none' >
                         <span className='text-lg font-medium' >{todo.subject}</span>
                         <p className='text-sm text-zinc-500' >{todo.paragraph}{todo.page}{todo.number}</p>
