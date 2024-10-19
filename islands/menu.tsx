@@ -8,7 +8,7 @@ export default function Menu() {
     const [todos, setTodos] = useState<Array>([])
     const [redact, setRedact] = useState<boolean>(false)
 
-    const subjects: Array<string> = ['Русский язык', 'Физика', 'Английский язык', 'История', 'Химия', 'Биология', 'Алгебра', 'География', 'Информатика', 'Геометрия', 'Обществознание']
+    const subjects: Array<string> = ['Русский язык', 'Физика', 'Английский язык', 'История', 'Химия', 'Биология', 'Алгебра', 'География', 'Информатика', 'Геометрия', 'Обществознание', 'Литература', 'ОБЗР']
 
     useEffect(() => {
         const storageTodos = localStorage.getItem('todos')
@@ -19,7 +19,7 @@ export default function Menu() {
  
     function createTodo(e: Event) {
         e.preventDefault()
-        if(newTodo.subject && newTodo.paragraph !== ''){
+        if(newTodo.subject && (newTodo.paragraph || newTodo.page || newTodo.number) !== ''){
             const todo = {
                 subject: newTodo.subject,
                 paragraph: newTodo.paragraph,
@@ -108,16 +108,16 @@ export default function Menu() {
                         </label>
 
                         <label className='flex flex-col space-y-1'>
-                            <span className='font-medium' >Параграф</span>
-                            <input value={newTodo.paragraph} onChange={(e) => setNewTodo({...newTodo, paragraph: e.target.value})} className='ring-2 ring-zinc-200 focus:ring-2 focus:ring-indigo-400 focus:outline-none p-1 rounded' placeholder='обязательное поле' type="text" />
+                            <span className='font-medium' >Текст</span>
+                            <input value={newTodo.paragraph} onChange={(e) => setNewTodo({...newTodo, paragraph: e.target.value})} className='ring-2 ring-zinc-200 focus:ring-2 focus:ring-indigo-400 focus:outline-none p-1 rounded' placeholder='поле ввода' type="text" />
                         </label>
                         <label className='flex flex-col space-y-1'>
                             <span className='font-medium' >Страница</span>
-                            <input value={newTodo.page} onChange={(e) => setNewTodo({...newTodo, page: e.target.value})} className='ring-2 ring-zinc-200 focus:ring-2 focus:ring-indigo-400 focus:outline-none p-1 rounded' placeholder='необязательное поле' type="text" />
+                            <input value={newTodo.page} onChange={(e) => setNewTodo({...newTodo, page: e.target.value})} className='ring-2 ring-zinc-200 focus:ring-2 focus:ring-indigo-400 focus:outline-none p-1 rounded' placeholder='поле ввода' type="text" />
                         </label>
                         <label className='flex flex-col space-y-1'>
                             <span className='font-medium' >Номер</span>
-                            <input value={newTodo.number} onChange={(e) => setNewTodo({...newTodo, number: e.target.value})} className='ring-2 ring-zinc-200 focus:ring-2 focus:ring-indigo-400 focus:outline-none p-1 rounded' placeholder='необязательное поле' type="text" />
+                            <input value={newTodo.number} onChange={(e) => setNewTodo({...newTodo, number: e.target.value})} className='ring-2 ring-zinc-200 focus:ring-2 focus:ring-indigo-400 focus:outline-none p-1 rounded' placeholder='поле ввода' type="text" />
                         </label>
                         {redact ?
                         <button onClick={changeTodo} className='bg-indigo-500 w-full rounded text-white text-lg font-medium p-1' >Сохранить</button>
